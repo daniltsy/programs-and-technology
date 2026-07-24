@@ -1,54 +1,186 @@
-# vue-project
+## Preview
 
-This template should help get you started developing with Vue 3 in Vite.
+![Weather App](./screenshots/weather.png)
 
-## Recommended IDE Setup
+# 🌤 Weather App
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+![Vue](https://img.shields.io/badge/Vue-3-42b883)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Quasar](https://img.shields.io/badge/UI-Quasar-1976d2)
+![Pinia](https://img.shields.io/badge/State-Pinia-yellow)
+![Vitest](https://img.shields.io/badge/Test-Vitest-6e9f18)
+![Vite](https://img.shields.io/badge/Build-Vite-646cff)
 
-## Recommended Browser Setup
+Приложение для просмотра текущей погоды с использованием **OpenWeatherMap API**.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Проект реализован на **Vue 3 + TypeScript** с использованием **Composition API**, **Pinia** для управления состоянием и **Quasar Framework** для UI-компонентов.
 
-## Type Support for `.vue` Imports in TS
+Приложение автоматически определяет местоположение пользователя и отображает текущую погоду, а также позволяет выполнять поиск погоды по названию города.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+---
 
-## Customize configuration
+## 🚀 Features
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### Реализованный функционал
 
-## Project Setup
+✅ Автоматическое определение местоположения пользователя при загрузке приложения  
+✅ Получение текущей погоды по координатам  
+✅ Поиск погоды по названию города  
+✅ Отображение:
 
-```sh
+- города;
+- температуры;
+- описания погоды;
+- иконки;
+- влажности;
+- скорости ветра.
+
+✅ Обработка ошибок:
+
+- ошибки геолокации;
+- ошибки API;
+- сетевые ошибки.
+
+✅ Индикатор загрузки  
+✅ Адаптивная верстка для мобильных устройств и desktop  
+✅ Полная TypeScript типизация  
+✅ API ключ хранится в `.env`  
+✅ Unit-тесты для бизнес-логики и компонентов
+
+---
+
+# 🛠 Tech Stack
+
+## Core
+
+- Vue 3
+- Composition API
+- TypeScript
+- Vite
+- Pinia
+- Vue Router
+
+## UI
+
+- Quasar Framework
+
+## API
+
+- OpenWeatherMap API
+- Axios
+
+## Testing
+
+- Vitest
+- Vue Test Utils
+
+---
+
+# 📂 Project Structure
+
+```
+src/
+│
+├── api/
+│   ├── axios.ts
+│   └── weather.api.ts
+│
+├── components/
+│   ├── MainLoader.vue
+│   ├── SearchInput.vue
+│   ├── WeatherCard.vue
+│   └── WeatherInfo.vue
+│   └── EmptyWeather.vue
+│
+├── composables/
+│   └── useGeolocation.ts
+│
+├── services/
+│   └── weather.service.ts
+│
+├── stores/
+│   └── weather.store.ts
+│
+├── types/
+│   ├── weather.ts
+│   └── weather.dto.ts
+│
+├── views/
+│   └── HomeView.vue
+│
+└── utils/
+    └── constants.ts
+```
+
+---
+
+# ⚙️ Installation
+
+## 1. Clone repository
+
+```bash
+git clone <repository-url>
+```
+
+Перейдите в папку проекта:
+
+```bash
+cd weather-app
+```
+
+---
+
+## 2. Install dependencies
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+---
 
-```sh
+# 🔑 Environment Variables
+
+Создайте файл:
+
+```
+.env
+```
+
+Добавьте API ключ OpenWeatherMap, а также укажите базовый эндпоинт, по умолчанию - https://api.openweathermap.org/data/2.5:
+
+```env
+VITE_API_URL=your_url
+VITE_API_KEY=your_api_key
+```
+
+# ▶️ Development
+
+Запуск проекта в режиме разработки:
+
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+После запуска приложение будет доступно:
 
-```sh
+```
+http://localhost:5173
+```
+
+---
+
+# 📦 Production build
+
+Создание production-сборки:
+
+```bash
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+# 🧪 Testing
 
-```sh
-npm run test:unit
-```
+Запуск тестов:
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+```bash
+npm run test
 ```
