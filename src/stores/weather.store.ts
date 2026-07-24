@@ -10,7 +10,6 @@ export const useWeatherStore = defineStore('weather', () => {
   const weather = ref<Weather | null>(null)
   const loading = ref(false)
   const error = ref<string | null>(null)
-  const lastCity = ref(localStorage.getItem('lastCity') || '')
   const hasWeather = computed(() => !!weather.value)
 
   async function fetchByCoordinates(lat: number, lon: number) {
@@ -19,7 +18,6 @@ export const useWeatherStore = defineStore('weather', () => {
 
     try {
       weather.value = await weatherService.getCurrentWeather(lat, lon)
-      saveCity(weather.value.city)
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         error.value = getErrorMessage(e)
@@ -35,7 +33,6 @@ export const useWeatherStore = defineStore('weather', () => {
 
     try {
       weather.value = await weatherService.getWeatherByCity(city)
-      saveCity(city)
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         error.value = getErrorMessage(e)
@@ -43,11 +40,6 @@ export const useWeatherStore = defineStore('weather', () => {
     } finally {
       loading.value = false
     }
-  }
-
-  function saveCity(city: string) {
-    lastCity.value = city
-    localStorage.setItem('lastCity', city)
   }
 
   function getErrorMessage(error: AxiosError) {
@@ -62,13 +54,17 @@ export const useWeatherStore = defineStore('weather', () => {
     return 'Ошибка загрузки данных'
   }
 
+  function clearWeather() {
+    weather.value = null
+  }
+
   return {
     weather,
     loading,
     error,
-    lastCity,
     hasWeather,
     fetchByCoordinates,
     fetchByCity,
+    clearWeather,
   }
 })

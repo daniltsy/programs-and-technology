@@ -22,6 +22,12 @@ export default defineConfigWithVueTs(
   vueTsConfigs.recommended,
 
   {
+    rules: {
+      'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+    },
+  },
+
+  {
     ...pluginVitest.configs.recommended,
     files: ['src/**/__tests__/*'],
   },
