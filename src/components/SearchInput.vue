@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 
 import { debounce } from 'quasar'
+import { SEARCH_DEBOUNCE } from '@/utils/constants'
 
 interface Props {
   modelValue?: string
@@ -37,7 +38,7 @@ const handleSearch = debounce(() => {
   }
   emit('update:modelValue', city)
   emit('search', city)
-}, 800)
+}, SEARCH_DEBOUNCE)
 
 function onEnter() {
   handleSearch()

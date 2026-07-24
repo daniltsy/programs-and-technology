@@ -4,7 +4,12 @@ import { ref, computed } from 'vue'
 import { weatherService } from '@/services/weather.service'
 
 import type { Weather } from '@/types/weather'
-import { AxiosError } from 'axios'
+import axios, { AxiosError } from 'axios'
+
+export const UNKONWN_ERROR = 'Неизвестная ошибка'
+export const CITY_NOT_FOUND = 'Город не найден'
+export const API_KEY_ERROR = 'Ошибка API ключа'
+export const FETCH_ERROR = 'Ошибка загрузки данных'
 
 export const useWeatherStore = defineStore('weather', () => {
   const weather = ref<Weather | null>(null)
@@ -19,8 +24,10 @@ export const useWeatherStore = defineStore('weather', () => {
     try {
       weather.value = await weatherService.getCurrentWeather(lat, lon)
     } catch (e: unknown) {
-      if (e instanceof AxiosError) {
+      if (axios.isAxiosError(e)) {
         error.value = getErrorMessage(e)
+      } else {
+        error.value = UNKONWN_ERROR
       }
     } finally {
       loading.value = false
@@ -34,8 +41,10 @@ export const useWeatherStore = defineStore('weather', () => {
     try {
       weather.value = await weatherService.getWeatherByCity(city)
     } catch (e: unknown) {
-      if (e instanceof AxiosError) {
+      if (axios.isAxiosError(e)) {
         error.value = getErrorMessage(e)
+      } else {
+        error.value = UNKONWN_ERROR
       }
     } finally {
       loading.value = false
@@ -44,14 +53,14 @@ export const useWeatherStore = defineStore('weather', () => {
 
   function getErrorMessage(error: AxiosError) {
     if (error.response?.status === 404) {
-      return 'Город не найден'
+      return CITY_NOT_FOUND
     }
 
     if (error.response?.status === 401) {
-      return 'Ошибка API ключа'
+      return API_KEY_ERROR
     }
 
-    return 'Ошибка загрузки данных'
+    return FETCH_ERROR
   }
 
   function clearWeather() {
